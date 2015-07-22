@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>master_detail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">
+    <script src="${ctx}/js/venus/venus_lui_admin.js"></script>-->
+
+  </head>
+  
+  <body>
+        <div class="">
+		<div class="col-sm-12">
+			<div class="tabbable">
+				<ul class="nav nav-tabs padding-12" id="myTab">
+					<li class="active">
+						<a data-toggle="tab" href="#masterDetail">
+							${langMap['lang.webinfo.detail']} 
+						</a>
+					</li>
+
+					<li>
+						<a id="queryMasterLog" data-toggle="tab" href="#updateMasterLog" onclick="getOptLog(${(master.id)!},'queryMasterHist_content');">
+							${langMap['lang.webinfo.modifylog']}
+						</a>
+					</li>
+					
+					<li>
+						<a id="queryAuthorizationLog" data-toggle="tab" href="#authorizationLog" >
+							${langMap['lang.webinfo.authoriselog']}
+						</a>
+					</li>
+
+				</ul>
+
+				<div class="tab-content">
+					<div id="masterDetail" class="tab-pane in active full-left">
+						<div class="">
+							${langMap['lang.webinfo.name']} : ${(master.name)!}
+							</br>
+							${langMap['lang.webmanager.accmanager.master.cnname']} : ${(master.cnname)!}
+							</br>
+							${langMap['lang.webinfo.acctype']} : ${(master.type)!}
+							</br>
+							${langMap['lang.webmanager.accmanager.org.orgname']} : ${master.orgid!}
+							</br>
+							${langMap['lang.webmanager.accmanager.master.position']} : ${(master.position)!}
+							</br>
+							${langMap['lang.webinfo.mobile']!} : ${(master.mobile)!}
+							</br>
+							${langMap['lang.webinfo.email']!} : ${(master.email)!}
+							</br>
+							${langMap['lang.webinfo.effecttime']!} ： ${(master.begintime)!}
+							</br>
+							${langMap['lang.webinfo.losetime']!} ： ${(master.endtime)!}
+
+						</div>
+					</div>
+
+					<div id="updateMasterLog" class="tab-pane full_left">
+						<div id="queryMasterHist_content"></div>
+					</div>
+					
+					<div id="authorizationLog" class="tab-pane full_left">
+						授权记录在这里啊
+
+				    </div>
+			    </div>
+			</div>
+		</div><!-- /span -->
+		
+	</div><!-- /row -->
+	
+	<#include "/page/common/optlog/optlog_obj.html" />
+
+  </body>
+</html>

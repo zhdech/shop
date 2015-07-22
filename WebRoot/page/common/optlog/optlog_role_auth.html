@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>optlog_role_auth.html</title>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+<script type="text/javascript">
+
+function getRoleAuthLog(objId,contentId)
+{
+	$.post("optlog/getObjAuthOptLog", "optId="+objId, function(result) {
+		var _divContent = "<div id=\"accordion\" class=\"accordion-style1 panel-group\">";
+		var _logDiv = "";
+		var _tempStr = "";
+		$.each(result, function(i,obj){
+			_logDiv = _logDiv + "<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">";
+			_logDiv = _logDiv + "<a class=\"accordion-toggle collapsed\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseRoleAuthLog"+i+"\">";
+			_logDiv = _logDiv + "<i class=\"glyphicon glyphicon-chevron-right\" data-icon-hide=\"glyphicon glyphicon-chevron-down\" data-icon-show=\"glyphicon glyphicon-chevron-right\"></i>";
+			
+			if(obj.OPTTYPE == "authAdd")
+			{
+				_logDiv = _logDiv + (i+1) + ". " + obj.OPTTIME + " ${langMap['lang.common.log.by']!}  <b>" + obj.OPERATOR + "</b> ${langMap['lang.common.log.authAdd']!} " ;
+			}else
+			{
+				_logDiv = _logDiv + (i+1) + ". " + obj.OPTTIME + " ${langMap['lang.common.log.by']!}  <b>" + obj.OPERATOR + "</b> ${langMap['lang.common.log.authDel']!} " ;
+			}
+			
+			_logDiv = _logDiv + "</a></h4></div>";
+			_logDiv = _logDiv + "<div class=\"panel-collapse collapse\" id=\"collapseRoleAuthLog"+i+"\">";
+			_logDiv = _logDiv + "<div class=\"panel-body\">";
+			
+			if(obj.CONTENT !=null && obj.CONTENT != "")
+			{
+				_tempStr = "";
+				var _tempJson = eval(obj.CONTENT);
+				$.each(_tempJson,function(j,str)
+				{
+					for (var key in str)
+				    {
+				        $.each(str[key],function(n,tmstr)
+				        {
+			        		_tempStr = _tempStr + "${langMap['lang.common.log.master']!}： " + tmstr.master + "</br>";
+				        	
+				        })
+				    }
+				})
+			}
+			_logDiv = _logDiv + _tempStr;
+			_logDiv = _logDiv + "</div></div></div>";
+		});   
+		_divContent = _divContent + _logDiv + "</div>";
+		$("#"+contentId).html(_divContent);
+	});
+}
+
+</script>
+  </body>
+</html>

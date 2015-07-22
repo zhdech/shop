@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!-- basic styles -->
+
+		<link rel="stylesheet" href="${ctx}/page/common/css/bootstrap/bootstrap.min.css"  />
+		<link rel="stylesheet" href="${ctx}/page/common/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts 
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+		-->
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="${ctx}/page/common/css/ace.min.css" />
+		<link rel="stylesheet" href="${ctx}/page/common/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 8] ${ctx}/css/ace-ie.min.css>
+		  <link rel="stylesheet" href="" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]> <![endif]-->
+		<script src="${ctx}/page/common/js/html5shiv.js"></script>
+		<script src="${ctx}/page/common/js/respond.min.js"></script>
+		
+		
+		<!-- basic scripts -->
+		<script src="${ctx}/page/common/js/jquery.min.js"></script>
+		<script src="${ctx}/page/common/js/bootstrap/bootstrap.min.js"></script>
+		<script src="${ctx}/page/common/js/bootbox.min.js"></script>
+		<script src="${ctx}/page/common/js/jquery.validate.min.js"></script>
+		<script src="${ctx}/page/common/js/jquery.placeholder.js"></script>
+	</head>
+
+	<body class="login-layout">
+		<div class="main-container">
+			<div class="main-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="center">
+							    <h4 class="blue">&nbsp;</h4>
+								<h1>
+									<!--  <span class="red">Four A</span> -->
+									<span class="white">${langMap['lang.global.common.web.name']!}</span>
+								</h1>
+								<h4 class="blue">&nbsp;</h4>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="position-relative">
+								<div id="login-box" class="login-box visible widget-box no-border">
+									<div class="widget-body">
+										<div class="widget-main">
+											<h4 class="header blue lighter bigger">
+												${langMap['lang.weblogin.login.remind']!}
+											</h4>
+
+											<div class="space-6"></div>
+                                            <!-- /FourA/login -->
+											<form id="login_form_id" action="${ctx}/login" method="post">
+												<fieldset>
+													<label class="block clearfix" for="j_username">
+														<span class="block input-icon input-icon-right">
+															<input type="text" id="j_username" name="j_username" class="form-control" placeholder="帐号" />
+															<i class="glyphicon glyphicon-user red"></i>
+														</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" id="j_password" name="j_password"" class="form-control" placeholder="密码" />
+															<i class="glyphicon glyphicon-lock"></i>
+														</span>
+													</label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" id="j_code" name="j_code" value="" maxlength="4"  placeholder="验证码" /><br>
+															<img src="${ctx}/_login" onclick="this.src='${ctx}/_login?time='+new Date().getTime()"/>
+														</span>
+													</label>
+
+													<div class="space"></div>
+
+													<div class="clearfix">
+														<button type="submit" class="width-100 pull-right btn btn-sm btn-primary">
+															<i class="glyphicon glyphicon-key"></i>
+															${langMap['lang.global.common.button.login']!}
+														</button>
+													</div>
+													<br>
+													<div style="color: red">${messageInfo!}</div>
+													
+													<div class="space-4"></div>
+												</fieldset>
+											</form>
+
+											
+										</div><!-- /widget-main -->
+
+                                     
+									</div><!-- /widget-body -->
+								</div><!-- /login-box -->
+
+								
+							</div><!-- /position-relative -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div>
+		</div><!-- /.main-container -->
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+		
+		jQuery(function($) {
+			//兼容IE8、9
+			$('input, textarea').placeholder();
+			
+			$('#login_form_id').validate({
+				rules:
+				{
+					j_username:
+					{
+						required: true
+					},
+					j_password:
+					{
+						required: true
+					},
+					j_code:
+					{
+						required: true
+					}
+				},
+				messages:
+				{
+					j_username:
+					{
+						required:"${langMap['lang.weblogin.login.page.validate.loginacc']!}"
+					},
+					j_password:
+					{
+						required: "${langMap['lang.weblogin.login.page.validate.loginpass']!}"
+					},
+					j_code:
+					{
+						required: "${langMap['lang.weblogin.login.page.validate.loginpass']!}"
+					}
+				}
+			});
+			jQuery("#j_username").focus();
+		});
+		
+		
+			
+		</script>
+	</body>
+</html>

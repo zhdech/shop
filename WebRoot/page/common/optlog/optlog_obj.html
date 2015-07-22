@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>optlog_obj.html</title>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+  </head>
+  
+  <body>
+<script type="text/javascript">
+
+function getOptLog(objId,contentId)
+{
+	$.post("optlog/getObjOptLog", "optId="+objId, function(result) {
+		var _codeFields = "${fieldJson!}";
+		var _divContent = "<div id=\"accordion\" class=\"accordion-style1 panel-group\">";
+		var _logDiv = "";
+		var _tempStr = "";
+		$.each(result, function(i,obj){
+			_logDiv = _logDiv + "<div class=\"panel panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">";
+			_logDiv = _logDiv + "<a class=\"accordion-toggle collapsed\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapseLog"+i+"\">";
+			_logDiv = _logDiv + "<i class=\"glyphicon glyphicon-chevron-right\" data-icon-hide=\"glyphicon glyphicon-chevron-down\" data-icon-show=\"glyphicon glyphicon-chevron-right\"></i>";
+			
+			if(obj.OPTTYPE == "add")
+			{
+				_logDiv = _logDiv + (i+1) + ". " + obj.OPTTIME + " ${langMap['lang.common.log.by']!}  <b>" + obj.OPERATOR + "</b> ${langMap['lang.common.log.create']!} " ;
+			}else
+			{
+				_logDiv = _logDiv + (i+1) + ". " + obj.OPTTIME + " ${langMap['lang.common.log.by']!}  <b>" + obj.OPERATOR + "</b> ${langMap['lang.common.log.modify']!} " ;
+			}
+			
+			_logDiv = _logDiv + "</a></h4></div>";
+			_logDiv = _logDiv + "<div class=\"panel-collapse collapse\" id=\"collapseLog"+i+"\">";
+			_logDiv = _logDiv + "<div class=\"panel-body\">";
+			
+			if(obj.CONTENT !=null && obj.CONTENT != "")
+			{
+				_tempStr = "";
+				if(obj.OPTTYPE == "add")
+				{
+					var _tempJson = eval("["+obj.CONTENT+"]");
+					var _tempCode = eval(_codeFields);
+					$.each(_tempJson,function(j,str)
+					{
+						for (var key in str)
+					    {
+							//alert(key); alert(str[key]);
+							_tempStr = _tempStr + _tempCode[0][key] + ": " + ((str[key])==null?"":(str[key])) + "</br>";
+					    }
+					})
+				}else
+				{
+					var _tempJson = eval(obj.CONTENT);
+					var _tempCode = eval(_codeFields);
+					$.each(_tempJson,function(j,str)
+					{
+						for (var key in str)
+					    {
+					        //alert(key); //alert(str[key]);
+					        //alert(_tempCode[0][key]);
+					        _tempStr = _tempStr + _tempCode[0][key] +":&nbsp;";
+					        $.each(str[key],function(n,tmstr)
+					        {
+					        	//alert(n);alert(tmstr.oldVal);
+					        	_tempStr = _tempStr + "${langMap['lang.common.log.oldVal']!} " + tmstr.oldVal + "&nbsp;&nbsp;" + "${langMap['lang.common.log.newVal']!} " + tmstr.newVal + "</br>";
+					        })
+					    }
+					})
+				}
+			}
+			_logDiv = _logDiv + _tempStr;
+			_logDiv = _logDiv + "</div></div></div>";
+		});   
+		_divContent = _divContent + _logDiv + "</div>";
+		$("#"+contentId).html(_divContent);
+	});
+}
+
+</script>
+  </body>
+</html>

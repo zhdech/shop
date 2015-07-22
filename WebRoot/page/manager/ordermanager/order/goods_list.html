@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<title>订单管理</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+</head>
+
+<body>
+
+<div class="row">
+   <div class="col-xs-12">
+		<div class="widget-body">
+			
+		</div>
+	
+		<div class="widget-body  col-xs-12">
+			<div id="div_condition_search" class="widget-main row">
+			  <div class="col-xs-8 pull-left">
+				<input type="text" id="name" name="name" value="${name!}" class="" placeholder="名称" />
+				<input type="text" id="orgid" name="orgid" value="${orgid!}" class="" placeholder="组织名称" />
+				
+				<select id="type" name="type">
+				    <option value="-1" selected="selected">${langMap['lang.webinfo.acctype']}</option>
+				    <#list codeMap['code.master.acctype'].keySet() as mkey>
+				    		<option value="${mkey}" >${codeMap['code.master.acctype']['${mkey}']}</option>
+				    </#list>
+				</select>
+				<a id="a_condition_search" href="javascript:void(0);" class="btn btn-sm btn-info" onclick="condition_search('${ctx}/master/getMasterList')">
+						<i class="glyphicon glyphicon-search"></i> ${langMap['lang.global.common.button.query']}
+				</a>
+			  </div>	
+			  <div class="col-xs-4 pull-right">
+			    <#if hasPermission('master_list_add')>
+				<a href="${ctx}/master/gotoSave" class="btn btn-sm btn-info pull-right" openMode="rightPage"> 
+					<i class="glyphicon glyphicon-plus bigger-110"></i>
+					${langMap['lang.global.common.button.add']}
+				</a>
+				</#if>
+				<a href="${ctx}/master/gotoSave" class="btn btn-sm btn-info" openMode="rightPage"> 
+					<i class="glyphicon glyphicon-import bigger-110"></i>
+					${langMap['lang.global.common.button.import']}
+				</a>
+				
+				<a href="${ctx}/master/gotoSave" class="btn btn-sm btn-info" openMode="rightPage"> 
+					<i class="glyphicon glyphicon-export bigger-110"></i>
+					${langMap['lang.global.common.button.export']}
+				</a>
+			  </div>
+			</div>
+		</div>
+   </div>
+</div>
+   <br>
+
+   <form id="form_query" action="${ctx}/master/getMasterList" method="post">
+    
+    <!-- 数据列表 -->
+	<div class="row">
+		<div class="col-xs-12">
+		    <!-- 列表标题 -->
+			
+			
+			<!-- 列表开始 -->
+			<div class="table-responsive">
+				<table id="wew" name="wew" class="table table-striped table-bordered table-hover full-left">
+				   <thead>
+					   <tr>
+					        <th class="center"><input type="checkbox" class="ace" onclick="checkboxSelectAll(this)"/> <span class="lbl"></span>
+					        <#list headMap.keySet() as mkey>
+						   		<th>${headMap.get(mkey)}</th>
+					   	    </#list>
+					   	    <th>${langMap['lang.global.common.table.operate']}</th>
+					   </tr>
+				   </thead>
+				   <tbody>
+					   <#list pageObj.list as obj>
+						   <tr id="ttttextrrrr_${obj['id']}">
+						       <td class="center checked">
+						          	<label>
+						          		<input id="master_obj_${obj['id']}" type="checkbox" class="ace"/>
+						          		<span class="lbl"></span>
+								    </label>
+							   </td>
+							   <#list headMap.keySet() as mkey>
+							        <#if mkey=='type'>
+							        	<td class="col-xs-${(10/headMap.size())?int}">${(codeMap['code.master.acctype']['${obj[mkey]!}'])!}</td>
+							        <#elseif mkey=='name'>
+							        	<#if obj['status']=="lock">
+							        		<td class="col-xs-${(10/headMap.size())?int}"><span class="orange"><i class="glyphicon glyphicon-lock"></i></span> ${obj[mkey]!}</td>
+							        	<#else>
+							        		<td class="col-xs-${(10/headMap.size())?int}">${obj[mkey]!}</td>
+							        	</#if>
+				   			    	<#else>
+				   			    		<#if (obj[mkey]!)?length lt 20>   
+											<td class="col-xs-${(10/headMap.size())?int}">${obj[mkey]!}</td>
+										<#else> 
+										     <td class="col-xs-${(10/headMap.size())?int}" title="${obj[mkey]}">${obj[mkey][0..21]}...</td>
+										</#if>
+					   			    </#if>
+					   	 	   </#list>
+					   	 	   
+					   	 	   <td class="col-xs-2">
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<a id="mas_" class="blue" href="${ctx}/master/getMasterDetail/${obj.id!}" openMode="dialog" moduleName="帐号管理" functionName="主帐号详细" isIframe="false" modal="true" closeCallBack="" width="900" height="400" data="" title="详细">
+											<i class="glyphicon glyphicon-zoom-in bigger-130" ></i>
+										</a>
+										<#if hasPermission('master_list_update')>
+										<a id="mas_" class="green" href="${ctx}/master/gotoUpdate/${obj.id!}" openMode="rightPage" title="修改">
+											<i class="glyphicon glyphicon-pencil bigger-130" ></i>
+										</a>
+										</#if>
+										<#if hasPermission('master_list_delete')>
+										<a id="mas_list_del" class="red" href="javascript:void(0);" title="删除" onclick="ajaxRefresh('${ctx}/master/delete/${obj.id!}','${ctx}/master/getMasterList');">
+											<i class="glyphicon glyphicon-trash bigger-130" ></i>
+										</a>
+										</#if>
+										
+										<!-- 后续扩展的操作按钮 -->
+										<a id="mas_" class="blue" href="${ctx}/master/getDetail/${obj.id!}" openMode="rightPage" title="授权">
+											<i class="glyphicon glyphicon-retweet bigger-130" ></i>
+										</a>
+										<a id="mas_" class="blue" href="${ctx}/master/getDetail/${obj.id!}" openMode="rightPage" title="口令设置">
+											<i class="glyphicon glyphicon-cog bigger-130" ></i>
+										</a>
+										<a id="mas_" class="red" href="${ctx}/master/getDetail/${obj.id!}" openMode="rightPage" title="锁定">
+											<i class="glyphicon glyphicon-lock bigger-130" ></i>
+										</a>
+										
+									</div>
+								</td>
+					   	 	   
+						   </tr>
+					   </#list>
+				   </tbody>
+				</table>
+			</div>
+			<!-- 列表结束 -->
+			
+			<div class="modal-footer no-margin-top ">
+			    <!-- 按钮 位置 待用 -->
+			    <div class="col-xs-6">
+			    	<a href="javascript:viod(0)" class="btn btn-sm btn-info pull-left" onclick="getSelCheckboxToArray()"> 
+				    	<i class="glyphicon glyphicon-wrench bigger-110"></i>
+						认证方式
+					</a>
+					<a href="#" class="btn btn-sm btn-info pull-left"  openMode="rightPage"> 
+				    	<i class="glyphicon glyphicon-circle-arrow-up bigger-110"></i>
+						帐号采集
+					</a>
+					<a href="#" class="btn btn-sm btn-info pull-left"  openMode="rightPage"> 
+				    	<i class="glyphicon glyphicon-circle-arrow-down bigger-110"></i>
+						帐号推送
+					</a>
+			    </div>
+				 
+				<!-- 分页标签 -->
+		        <div class="col-xs-6">
+			        <ul class="pull-right" id="table_pageNum" currentPage="${pageObj.pageNumber}" sizePage="${pageObj.pageSize}" totalPages="${pageObj.totalPage}" totalRows="${pageObj.totalRow}"></ul>
+		        </div>
+			</div>
+		</div>
+	</div>
+	
+  </form>
+
+</body>
+</html>

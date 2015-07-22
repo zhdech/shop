@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<body>
+<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand" style="height:45px">
+						<small>
+							<i class="glyphicon glyphicon-fire"></i>
+							${langMap['lang.global.common.web.name']!}
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="purple">
+							<a class="dropdown-toggle" href="${ctx}/goods/getShopList" openMode="rightPage">
+								<i class="glyphicon glyphicon-shopping-cart"></i>
+								<span id="shoppingsum"></span>
+								<span class="badge badge-grey">购物车</span>
+							</a>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle" >
+								<img class="nav-user-photo" src="${ctx}/page/common/images/avatars/avatar.png" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>欢迎您：</small>${session.master.username!}
+								</span>
+
+								<span class="caret" style="height:9px;width:9px"></span>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close" role="menu">
+								
+								<li>
+									<a href="#">
+										<i class="glyphicon glyphicon-cog  blue"></i>
+										${langMap['lang.global.common.button.settings']}
+									</a>
+								</li>
+
+								<li>
+									<a href="#" moduleName="登录管理" functionName="登录帐号信息" isIframe="false" modal="true" closeCallBack="" width="900" height="400" data="">
+										<i class="glyphicon glyphicon-user  blue"></i>
+										${userName}
+									</a>
+								</li>
+								
+								<li>
+									<a href="#">
+										<i class="glyphicon glyphicon-question-sign blue"></i>
+										${langMap['lang.global.common.button.help']}
+									</a>
+								</li>
+
+								<li>
+									<a href="${ctx}/logout" openMode="logout">
+										<i class="glyphicon glyphicon-off red"></i>
+										${langMap['lang.global.common.button.logout']}
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+</body>
+
+</html>

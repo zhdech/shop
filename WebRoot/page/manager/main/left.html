@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<body>
+<style type="text/css">
+	
+.icon-angle-down:before{content:"\f107";}        
+</style>
+<a class="menu-toggler" id="menu-toggler" href="#">
+	<span class="menu-text"></span>
+</a>
+
+<div class="sidebar" id="sidebar">
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+	</script>
+
+	<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+		<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+			<button class="btn btn-success">
+				<i class="glyphicon glyphicon-signal"></i>
+			</button>
+
+			<button class="btn btn-info">
+				<i class="glyphicon glyphicon-pencil"></i>
+			</button>
+
+			<button class="btn btn-warning">
+				<i class="glyphicon glyphicon-star"></i>
+			</button>
+
+			<button class="btn btn-danger">
+				<i class="glyphicon glyphicon-music"></i>
+			</button>
+		</div>
+
+		<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+			<span class="btn btn-success"></span>
+
+			<span class="btn btn-info"></span>
+
+			<span class="btn btn-warning"></span>
+
+			<span class="btn btn-danger"></span>
+		</div>
+	</div><!-- #sidebar-shortcuts -->
+
+	<ul class="nav nav-list">
+			<li class="active">
+				<a id="sjbj" href="${ctx}/goods/getGoodsList" openMode="rightPage" class="dropdown-toggle" optMenu="true">
+					<i class="glyphicon glyphicon-barcode"></i>
+					<span class="menu-text">手机报价
+					</span>
+				</a>
+			</li>
+			<#if session.master.manager=='1'>
+				<li>
+					<a href="${ctx}/loginUser/getUserList" openMode="rightPage" class="dropdown-toggle" optMenu="true">
+						<i class="glyphicon glyphicon-user"></i>
+						<span class="menu-text">用户管理</span>
+					</a>
+				</li>
+				<!-- 
+				<li>
+					<a href="#" class="dropdown-toggle">
+						<i class="glyphicon glyphicon-plane"></i>
+						<span class="menu-text">发货管理</span>
+					</a>
+				</li>
+				 -->
+				<li>
+					<a href="${ctx}/order/getOrderList" openMode="rightPage"  class="dropdown-toggle" optMenu="true">
+						<i class="glyphicon glyphicon-sort-by-order"></i>
+						<span class="menu-text">订单管理</span>
+					</a>
+				</li>
+			</#if>
+	</ul><!-- /.nav-list -->
+
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+	</script>
+</div>
+	</body>
+</html>

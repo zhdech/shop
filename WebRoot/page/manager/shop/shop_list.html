@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<title>手机商品市场</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+</head>
+
+<body>
+
+<div class="row">
+   <div id="vf_loadRight" class="col-xs-12">
+	<!-- PAGE CONTENT BEGINS -->
+                             <div class="widget-body">
+		</div>
+                             <div class="widget-body  col-xs-12">
+		</div>
+		<form id="form_query" action="${ctx}/goods/getGoodsList" method="post">
+		<!-- 列表开始 -->
+		<div class="table-responsive">
+				<table id="wew" name="wew" class="table table-striped table-bordered table-hover full-left" >
+				   <thead>
+					   <tr>
+					   <!-- 
+					        <th class="center" style="width:1px;"><input type="checkbox" class="ace" onclick="checkboxSelectAll(this)"/> <span class="lbl"></span></th>
+					         -->
+					        <#list headMap.keySet() as mkey>
+						   		<th>${headMap.get(mkey)}</th>
+					   	    </#list>
+					   	    <th>${langMap['lang.global.common.table.operate']}</th>
+					   </tr>
+				   </thead>
+				   <tbody>
+					   <#list pageObj.list as obj>
+						   <tr id="ttttextrrrr_${obj['goodsid']}" >
+						   <!-- 
+						       <td class="center checked">
+						          	<label>
+						          		<input id="master_obj_${obj['id']}" type="checkbox" class="ace"/>
+						          		<span class="lbl"></span>
+								    </label>
+							   </td>
+							    -->
+							   <#list headMap.keySet() as mkey>
+							        <#if mkey=='pirce'>
+							        	<!-- <td class="col-xs-${(2/headMap.size())?int}"></span> ${obj[mkey]!}￥</td> -->
+							        	<td class="col-xs-${(2/headMap.size())?int}" style="width:80px;"><span id="pirce_${obj['id']!}">${obj[mkey]!}</span>￥</td>
+							        <#elseif mkey=='goods'>
+							        		<td class="col-xs-${(2/headMap.size())?int}" style="width:100px;">${obj[mkey]!}</td>
+					        		<#elseif mkey=='totalnum'>
+							        		<td class="col-xs-${(2/headMap.size())?int}" style="width:100px;"><span id="totalnum_${obj['id']!}">${obj[mkey]!}</span>￥
+				   			    	<#elseif mkey=='number'>
+							        		<td class="col-xs-${(2/headMap.size())?int}" style="width:100px;"><span id="number_${obj['id']!}">${obj[mkey]!}</span></td>
+				   			    	<#else>
+											<td class="col-xs-${(3/headMap.size())?int}" style="width:150px;">${obj[mkey]!}</td>
+					   			    </#if>
+					   	 	   </#list>
+					   	 	   
+					   	 	   <td class="col-xs-5">
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<!-- 后续扩展的操作按钮 -->
+										<input id="min_${obj['id']!}" goodsid="${obj['id']!}" onClick="" type="button" value="-"  style="height:20px;"/>  
+										<input id="text_box_${obj['id']!}" name="pirce_sum" pirce="${obj['pirce']!}" size="1" type="text" value="${obj['number']!}""  style="height:20px;" disabled="disabled"/>  
+										<input id="add_${obj['id']!}" goodsid="${obj['id']!}" type="button" value="+"  style="height:20px;"/>  
+										<!-- 总价：<label id="total_${obj['goodsid']}"></label>  -->
+										<!-- 
+										<a id="buyGoods_${obj['goodsid']}" class="blue" style="cursor:pointer;" goodsid="${obj['id']}"  openMode="rightPage" title="加入购物车">
+											<i class="glyphicon glyphicon-saved" ></i>
+										</a>
+										 -->
+										<a id="goods_list_del" class="red" href="javascript:void(0);" title="删除" onclick="if(confirm('您确认要删除吗？', function() { }, null))ajaxRefresh('${ctx}/goods/deleteShop/${obj['id']!}','${ctx}/goods/getShopList');">
+											<i class="glyphicon glyphicon-trash bigger-130" ></i>
+										</a>
+									</div>
+								</td>
+					   	 	   
+						   </tr>
+					   </#list>
+				   </tbody>
+				</table>
+			</div>
+			
+		<!-- 列表结束 -->
+		<div class="modal-footer no-margin-top ">
+			<!-- 按钮 位置 待用 -->
+			<div class="col-xs-6">
+			<!-- 
+			<a id="form_delete_submit_btn" href="javascript:void(0)" class="btn btn-sm btn-info pull-left"> 
+		    	<i class="glyphicon glyphicon-trash bigger-110"></i>
+				删除
+			</a>
+			 -->
+			<a id="form_send_submit_btn" href="tencent://message/?uin=276979375&Site=qq&Menu=yes" class="btn btn-sm btn-info pull-left"> 
+		    	<img border="0" SRC="http://wpa.qq.com/pa?p=1:276979375:4" alt=" 客 服 " />
+			</a>
+			<label class="btn btn-sm btn-info pull-left" ><font color="red" style="font-weight:bold;">总价：
+			<span id="total"></span>元</font></label>
+			<span style="color:red;">注：客服人员会第一时间联系你确认金额。</span>
+		    </div>
+		    <!-- 分页标签 -->
+		     <div class="col-xs-6">
+		     <a id="form_save_submit_btn" href="javascript:void(0)" class="btn btn-sm btn-info pull-left"> 
+		    	<i class="glyphicon glyphicon-save"></i>
+				下单购买
+			</a>
+			
+	        	<#if pageObj.totalPage==0>
+		        <#else>
+		        	<ul class="pull-right" id="table_pageNum" currentPage="${pageObj.pageNumber}" sizePage="${pageObj.pageSize}" totalPages="${pageObj.totalPage}" totalRows="${pageObj.totalRow}"></ul>  
+		        </#if>
+	        </div>
+		</div>
+		</form>
+	<!-- PAGE CONTENT ENDS -->
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+
+$(function(){  
+	$("#span_menuTwoLevel").html("购物车");
+	$('input, textarea').placeholder();
+	var total = 0;
+	<#list pageObj.list as obj>
+		total = total+parseInt(${obj['totalnum']!});
+	</#list>
+	$("#total").html(total);
+    $("input[id*='add']").click(function(){
+    	var goodsid = $(this).attr("goodsid");
+	    var t = $("#text_box_"+goodsid);
+	    var number = $("#number_"+goodsid);
+	    var num = parseInt(t.val())+1;
+    	t.val(num);
+    	number.html(num);
+        setTotal(goodsid);
+        document.getElementById('form_query').action='${ctx}/goods/updateShop?goodNum='+num+'&goodsId='+goodsid;
+		ajaxSubmitAndRefresh('form_query','${ctx}/goods/getShopList');
+    })  
+    $("input[id*='min']").click(function(){
+    	var goodsid = $(this).attr("goodsid");
+	    var t = $("#text_box_"+goodsid);
+	    var number = $("#number_"+goodsid);
+    	var num = parseInt(t.val())-1;
+        if(num>=1){
+        	t.val(num);
+        	number.html(num);
+            setTotal(goodsid);  
+        }
+        document.getElementById('form_query').action='${ctx}/goods/updateShop?goodNum='+num+'&goodsId='+goodsid;
+		ajaxSubmitAndRefresh('form_query','${ctx}/goods/getShopList');
+    })  
+    function setTotal(goodsid){
+    	var totalnum = $("#totalnum_"+goodsid);//总价
+    	var number = $("#number_"+goodsid);//单价
+    	var pirce = $("#pirce_"+goodsid);
+    	//.toFixed(2)
+    	totalnum.html((parseInt(number.html())*parseInt(pirce.html())));
+    	total = 0;
+    	$.each($("span[id*='totalnum_']"),function(n,v){
+    		total+=parseInt($(this).text());
+    	});
+    	$("#total").html(total);
+    }  
+    
+    $("#form_save_submit_btn").click(function(){
+    	var total = 0;
+    	var sum = 0;
+    	var orderid;
+    	<#list pageObj.list as obj>
+			total = total+parseInt(${obj['totalnum']!});
+			sum = sum+parseInt(${obj['number']!});
+			orderid = ${obj['orderid']!};
+		</#list>
+		if(total>0){
+	    	var goodsid = $(this).attr("goodsid");
+		    var _num = $("#text_box_"+goodsid).val();
+		    var _pirce = $("#text_box_"+goodsid).attr("pirce");
+		    document.getElementById('form_query').action='${ctx}/order/save?goodNum='+sum+'&orderId='+orderid+"&total="+total;
+			ajaxSubmitAndRefresh('form_query','${ctx}/goods/getGoodsList');
+		}else{
+			alert("购物车还未商品，请先购买再进行下单");
+		}
+    })  
+})
+</script>
+</html>

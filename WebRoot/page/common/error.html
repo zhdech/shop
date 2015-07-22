@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>error.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+      <div class="page-content">
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- PAGE CONTENT BEGINS -->
+
+				<div class="error-container">
+					<div class="well">
+						<h1 class="grey lighter smaller">
+							<span class="blue bigger-125">
+								<i class="icon-sitemap"></i>
+								Error
+							</span>
+							页面
+						</h1>
+
+						<hr />
+						<h3 class="lighter smaller">您的请求发生了异常，请联系相关负责人及时解决</h3>
+
+						<div>
+							异常信息：
+							<br>
+							 ${errorInfo!}
+						</div>
+
+						<hr />
+						<div class="space"></div>
+
+						<div class="center">
+							<a href="#" class="btn btn-grey">
+								<i class="glyphicon glyphicon-arrow-left"></i>
+								去首页
+							</a>
+						</div>
+					</div>
+				</div><!-- PAGE CONTENT ENDS -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</div><!-- /.page-content -->
+  </body>
+</html>

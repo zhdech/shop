@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<title>订单管理</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+</head>
+<script src="${ctx}/page/common/js/jquery.jmp3.js"></script>
+<body>
+
+<div class="row">
+   <div id="vf_loadRight" class="col-xs-12">
+	<!-- PAGE CONTENT BEGINS -->
+                             <div class="widget-body">
+		</div>
+                             <div class="widget-body  col-xs-12">
+			<div id="div_condition_search" class="widget-main row">
+			<!-- 
+				<div class="col-xs-8 pull-left">
+					<input type="text" id="brand" name="brand" value="${brand!}" class="" placeholder="手机品牌" />
+					<input type="text" id="model" name="model" value="${model!}" class="" placeholder="手机型号" />
+					
+					<a id="a_condition_search" href="javascript:void(0);" class="btn btn-sm btn-info" onclick="condition_search('${ctx}/goods/getGoodsList')">
+							<i class="glyphicon glyphicon-search"></i> ${langMap['lang.global.common.button.query']}
+					</a>
+				</div>	
+				 -->
+			</div>
+		</div>
+		<form id="form_query" action="${ctx}/order/getOrderList" method="post">
+		<!-- 列表开始 -->
+		<div class="table-responsive">
+				<table id="wew" name="wew" class="table table-striped table-bordered table-hover full-left" >
+				   <thead>
+					   <tr>
+					   	    <th>订单名称</th>
+					   	    <th>创建人帐号</th>
+					   	    <th>创建人手机号</th>
+					   	    <th>创建时间</th>
+					   	    <th>订单状态</th>
+					   	    <th>订单数量</th>
+					   	    <th>订单总金额</th>
+					   	    <th>${langMap['lang.global.common.table.operate']}</th>
+					   </tr>
+				   </thead>
+				   <tbody>
+					   <#list pageObj.list as obj>
+						   <tr id="ttttextrrrr_${obj['orderid']}" >
+						  		<td class="col-xs-0" style="width:15%;"><span id="pirce_${obj['ordername']!}">${obj['ordername']!}</span></td>
+						  		<td class="col-xs-0" style="width:10%;"><span id="pirce_${obj['createname']!}">${obj['createname']!}</span></td>
+						  		<td class="col-xs-0" style="width:15%;"><span id="pirce_${obj['createmobile']!}">${obj['createmobile']!}</span></td>
+						  		<td class="col-xs-0" style="width:15%;"><span id="pirce_${obj['createtime']!}">${obj['createtime']!}</span></td>
+						  		<td class="col-xs-0" style="width:10%;"><span id="pirce_${obj['orderstatus']!}">
+						  		<#if (obj['orderstatus']!)== 0>
+						  			<span class="red">未发货</span>
+						  		<#else>
+						  			已发货
+					        	</#if>
+						  		</span></td>
+						  		<td class="col-xs-0" style="width:10%;"><span id="pirce_${obj['totalnum']!}">${obj['totalnum']!}</span></td>
+						  		<td class="col-xs-0" style="width:10%;"><span id="pirce_${obj['totalamount']!}">${obj['totalamount']!}</span>￥</td>
+					   	 	   
+					   	 	   <td class="col-xs-0" width="15%">
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<a id="goods_list_del" class="red" href="${ctx}/order/getOrderDetail/${obj.orderid!}" title="订单详细"  target="_blank">
+											<i class="glyphicon glyphicon-th-list"></i>
+										</a>
+									</div>
+								</td>
+					   	 	   
+						   </tr>
+					   </#list>
+				   </tbody>
+				</table>
+			</div>
+			<div id="newMessageDIV" style="display:none"></div> 
+		<!-- 列表结束 -->
+		<div class="modal-footer no-margin-top ">
+			<!-- 按钮 位置 待用 -->
+			<div class="col-xs-6">
+		    	<table> 
+					<tr> 
+					<td align="left">
+					<!-- <a target=blank href="tencent://message/?uin=276979375&Site=qq&Menu=yes"><img border="0" SRC="http://wpa.qq.com/pa?p=1:276979375:4" alt=" 客 服 " />&nbsp;</a>-->
+					</td>  
+					</tr>
+				</table> 
+		    </div>
+		    <!-- 分页标签 -->
+		    <#if pageObj!='null'>
+		        <div class="col-xs-6">
+			        <ul class="pull-right" id="table_pageNum" currentPage="${pageObj.pageNumber}" sizePage="${pageObj.pageSize}" totalPages="${pageObj.totalPage}" totalRows="${pageObj.totalRow}"></ul>
+		        </div>
+		    </#if>
+		</div>
+		</form>
+	<!-- PAGE CONTENT ENDS -->
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+callServices1();
+$(function(){
+	$("#span_menuTwoLevel").html("订单管理");
+	$('input, textarea').placeholder();
+	//$("#shoppingsum").text(${shoppingsum!});
+	var notSend = 1;
+	<#list pageObj.list as obj>
+		<#if (obj['orderstatus']!)== 0>
+    		//notSend = "${obj['orderstatus']!}";
+    		$('#newMessageDIV').html('<embed src="${ctx}/page/common/sound.mp3"/>'); 
+		</#if>
+	</#list>
+		//本来这里用的是<bgsound src="system.wav"/>,结果IE8不播放声音,于是换成了embed 
+		//$('#newMessageDIV').html('<embed src="${ctx}/page/common/sound.mp3"/>'); 
+		//IE9+,Firefox,Chrome均支持<audio/> 
+		//$('#newMessageDIV').html('<audio autoplay="autoplay"><source src="${ctx}/page/common/sound.mp3"' 
+		//+ 'type="audio/wav"/><source src="${ctx}/page/common/sound.mp3" type="audio/mpeg"/></audio>'); 
+});
+
+function callServices1(){
+	window.setTimeout("callServices1()",120000);
+	var hrefUrl = '${ctx}/order/queryOrderStatus';
+	// 发送ajax请求，
+	$.post(hrefUrl, function(result) {
+		if (result == "true") {
+			$('#newMessageDIV').html('<embed src="${ctx}/page/common/sound.mp3"/>'); 
+		}
+	});
+	removeLoadingMsg();
+}
+</script>
+
+</html>

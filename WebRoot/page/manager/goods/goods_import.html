@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>master_detail.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">
+    <script src="${ctx}/js/venus/venus_lui_admin.js"></script>-->
+
+  </head>
+  
+  <body>
+        <div class="">
+		<div class="col-sm-12">
+			<div class="tabbable">
+				<div class="tab-content">
+					<div id="masterDetail" class="tab-pane in active full-left" align="center">
+					<h3 align="center">商品批量导入</h3>
+					<form id="form_save_id" action="${ctx}/goods/importGoods" method="post" class="form-horizontal" enctype="multipart/form-data" target="hidden_frame">
+						<table border="1">
+							<tr>
+								<td align="right">模板下载：</td>
+								<td colspan="2"><a href="${ctx}/download/goods.xls">商品模板下载</a></td>
+							</tr>
+							<tr>
+								<td>请选择需要导入模板：</td>
+								<td><input type="file"  name="fileName" id = "fileName"></td>
+								<td><input type="submit" id="import" name ="import" value="导入"></td>
+							</tr>
+						</table>
+					</form>
+					</div>
+
+			    </div>
+			</div>
+		</div><!-- /span -->
+		
+	</div><!-- /row -->
+  </body>
+</html>

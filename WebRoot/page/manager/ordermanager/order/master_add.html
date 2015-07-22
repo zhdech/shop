@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="${ctx}/page/common/js/My97DatePicker/WdatePicker.js"></script>
+	<!-- <script src="${ctx}/page/manager/accmanager/master/master_add.js"></script> -->
+</head>
+
+<body>
+
+	<form id="form_save_id"
+		action="${ctx}/master/save" method="post"
+		class="form-horizontal" >
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="widget-box">
+					<div class="widget-header">
+						<h4>帐号添加</h4>
+					</div>
+
+					<div class="widget-body">
+						<div class="widget-main no-padding">
+							
+								<!-- <legend>Form</legend> -->
+ 								<br/>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1" for="master.name">
+											${langMap['lang.webinfo.name']}
+									</label>
+								    <div class="col-sm-9">
+										<input type="text" id="master.name" name="master.name"
+											value="" placeholder=""
+											class="col-xs-10 col-sm-5" />
+										&nbsp;<i class="glyphicon glyphicon-asterisk red">&nbsp;${nameMsg!}</i>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="masterpassword">
+										${langMap['lang.webinfo.password']}
+									</label>
+									<div class="col-sm-9" >
+										<input type="password" id="masterpassword" name="master.password"
+											value="${(master.password)!}" placeholder=""
+											class="col-xs-10 col-sm-5" />
+											&nbsp;<i class="glyphicon glyphicon-asterisk red">&nbsp;${passMsg!}</i>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="confirm_password">
+										${langMap['lang.webinfo.confirmpwd']}
+									</label>
+									<div class="col-sm-9" >
+										<input type="password" id="confirm_password" name="confirm_password"
+											value="" placeholder=""
+											class="col-xs-10 col-sm-5" />
+											
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webmanager.accmanager.master.cnname']}
+									</label>
+									<div class="col-sm-9">
+										<input type="text" id="master.cnname" name="master.cnname"
+											value="" placeholder=""
+											class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webinfo.acctype']}
+									</label>
+									<div class="col-sm-9">
+										<select id="master.type" name="master.type" class="col-xs-10 col-sm-5">
+										    <!-- 
+										    <option value="-1" selected="selected">选择类型</option>
+										    -->
+										    <#list codeMap['code.master.acctype'].keySet() as mkey>
+										    		<option value="${mkey}" >${codeMap['code.master.acctype']['${mkey}']}</option>
+										    </#list>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webmanager.accmanager.org.orgname']}
+									</label>
+									<div class="col-sm-8">
+										<input type="text" id="orgName" name="orgName"
+											value="" placeholder="" disabled="disabled"
+											class="col-xs-10 col-sm-5" />
+										<input type="hidden" id="master_orgid" name="master.orgid"
+										value="" placeholder="" />
+										<div class="adapt_btn01">
+										<ul><li><a href="${ctx}/org/gotoSelectOrg"  class="btn btn-xs btn-default btn-info"
+										openMode="dialog" moduleName="组织机构" functionName="选择组织" isIframe="false" modal="true" closeCallBack="" width="600" height="400" data="" id="selectOrgControl" ><span>选择组织</span></a></li></ul>
+									    </div>
+									</div>
+									
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webmanager.accmanager.master.position']!}
+									</label>
+									<div class="col-sm-9">
+										<input type="text" id="master.position" name="master.position"
+											value="" placeholder=""
+											class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webinfo.mobile']!}
+									</label>
+									<div class="col-sm-9">
+										<input type="text" id="master.mobile" name="master.mobile"
+											value="" placeholder=""
+											class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webinfo.email']}
+									</label>
+									<div class="col-sm-9">
+										<input type="text" id="master.email" name="master.email"
+											value="" placeholder="格式参考 123qwe@126.com"
+											class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webinfo.effecttime']!}
+									</label>
+									<div id="div_WdatePicker_begintime" class="col-sm-4">
+										<span class="block input-icon input-icon-right">
+											<input type="text" id="master.effecttime" name="master.effecttime"
+											value="${(master.begintime)!}" placeholder="格式参考 2014-01-01 00:00:00"
+											class="form-control col-xs-10 col-sm-5" onClick="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"/>
+											<i class="glyphicon glyphicon-calendar bigger-110"></i>
+										</span>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right col-xs-1"
+										for="form-field-1">
+										${langMap['lang.webinfo.losetime']!}
+									</label>
+									<div id="div_WdatePicker_endtime" class="col-sm-4">
+										<span class="block input-icon input-icon-right">
+											<input type="text" id="master.losetime" name="master.losetime"
+											value="" placeholder="格式参考 2014-01-01 23:59:59"
+											class="form-control col-xs-10 col-sm-5" onClick="WdatePicker({startDate:'%y-%M-%d 23:59:59',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"/>
+											<i class="glyphicon glyphicon-calendar bigger-110"></i>
+										</span>
+									</div>
+								</div>
+
+
+								<div class="clearfix form-actions center">
+									<div class="col-md-offset-3 col-md-6">
+										<button id="form_save_submit_btn" class="btn btn-sm btn-default btn-info" type="button">
+											<i class="glyphicon glyphicon-saved bigger-110"></i>
+											${langMap['lang.global.common.button.save']}
+										</button>
+										&nbsp; &nbsp; &nbsp;
+										<button class="btn btn-sm btn-default btn-info" type="button" onclick="ajaxSubmitAndRefresh('form_save_id','${ctx}/master/getMasterList');">
+											<i class="glyphicon glyphicon-save bigger-110"></i>
+											${langMap['lang.global.common.button.savesyn']}
+										</button>
+										&nbsp; &nbsp; &nbsp;
+										<button class="btn btn-sm btn-default btn-info" type="reset">
+											<i class="glyphicon glyphicon-repeat bigger-110"></i>
+											${langMap['lang.global.common.button.reset']}
+										</button>
+										&nbsp; &nbsp; &nbsp; 
+										<a href="${ctx}/master/getMasterList" class="btn btn-sm btn-default btn-info" type="button" openMode="rightPage"> 
+										     <i class="glyphicon glyphicon-share-alt  bigger-110"></i> 
+										     ${langMap['lang.global.common.button.gobacklist']}
+										</a>
+								   </div>
+							   </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+
+<!-- 引入js文件内容 -->
+<script src="${ctx}/page/manager/accmanager/master/js/master_add.js"></script>
+</html>

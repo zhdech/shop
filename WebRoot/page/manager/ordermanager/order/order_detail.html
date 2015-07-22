@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>订单信息</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">
+    <script src="${ctx}/js/venus/venus_lui_admin.js"></script>-->
+	<script src="${ctx}/page/common/js/jquery.min.js"></script>
+  </head>
+  
+  <body>
+        <div class="">
+		<div class="col-sm-12">
+			<div class="tabbable">
+				<div class="tab-content">
+					<div id="masterDetail" class="tab-pane in active full-left">
+						<div id="printDiv">
+							<h4 align="center">订货单</h4>
+							<form id="form_update" action="${ctx}/order/updateOrder" method="post">
+							<table id="wew" name="wew" border="2" width="95%" align="center" cellpadding="0" cellspacing="0">
+							   <thead>
+								   <tr>
+								        <#list headMap.keySet() as mkey>
+									   		<th>${headMap.get(mkey)}</th>
+								   	    </#list>
+								   </tr>
+							   </thead>
+								   <#list goodsList as obj>
+									   <tr id="ttttextrrrr_${obj['goodsid']}" >
+								        	<td><span id="pirce_${obj['id']!}">${obj['good']!}</span></td>
+							        		<td>${obj['pirce']!}￥</td>
+							        		<td><span id="totalnum_${obj['id']!}">${obj['number']!}</span>
+											<td>${obj['totalnum']!}￥</td>
+									   </tr>
+								   </#list>
+							</table>
+							</form>
+							<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							姓名:${(user.username)!} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							手机号: ${(user.mobile)!}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							QQ号:${(user.qq)!}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							发货地址：${(user.address)!}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							订单总数量：${(orderList.totalnum)!}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单总金额：${(orderList.totalamount)!}￥
+							</br>
+						</div>
+						<br>
+						<table border="0" width="95%">
+							<tr>
+							<td class="col-xs-0" width="15%" align="right">
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<a id="goods_list_del" class="red" style="cursor: pointer;" onclick="printdiv();" title="打印" openMode="rightPage">
+											<i class="glyphicon glyphicon-print">打印&nbsp;&nbsp;&nbsp;</i>
+										</a>
+									</div>
+								</td>
+								<td class="col-xs-0" width="15%" align="left">
+									<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<a id="goods_list_del" class="red" style="cursor: pointer;" onclick="sendOrder(${(orderList.orderid)!});" title="线下发货" openMode="rightPage">
+											<i class="glyphicon glyphicon-tag">线下发货</i>
+										</a>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+			    </div>
+			</div>
+		</div><!-- /span -->
+		
+	</div><!-- /row -->
+	
+  </body>
+<script type="text/javascript">
+function printdiv(){ 
+	var agree = confirm('页面将被打印. \n\n现在就打印吗?');
+	if (agree){
+		var newstr = $("#printDiv").html();
+		
+		var oldstr = document.body.innerHTML; 
+		document.body.innerHTML = newstr; 
+		window.print(); 
+		return true;
+	}	
+	return false;
+}
+function sendOrder(orderId){
+	document.getElementById('form_update').action='${ctx}/order/updateOrder/'+orderId;
+	ajaxSubmitAndRefresh('form_update','${ctx}/order/getOrderList');
+}
+$(function(){  
+	$("#span_menuTwoLevel").html("订单管理");
+	$('input, textarea').placeholder();
+	//$("#shoppingsum").text(${shoppingsum!});
+})
+</script>
+</html>
